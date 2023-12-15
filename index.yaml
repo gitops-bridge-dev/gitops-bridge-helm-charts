@@ -11,6 +11,17 @@ entries:
     urls:
     - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/aws-ebs-csi-classes-1.0.0/aws-ebs-csi-classes-1.0.0.tgz
     version: 1.0.0
+  aws-fargate-fluentbit:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-12-15T23:42:01.029514019Z"
+    description: A Helm chart AWS Fargate FluentBit
+    digest: 6292be3b4cc22daa47840b856a733db554332617fb425a02c36b2dac99c724f9
+    name: aws-fargate-fluentbit
+    type: application
+    urls:
+    - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/aws-fargate-fluentbit-1.0.0/aws-fargate-fluentbit-1.0.0.tgz
+    version: 1.0.0
   team:
   - apiVersion: v2
     created: "2023-12-15T23:17:51.077001402Z"
@@ -21,4 +32,4 @@ entries:
     urls:
     - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/team-1.0.0/team-1.0.0.tgz
     version: 1.0.0
-generated: "2023-12-15T23:22:04.977348159Z"
+generated: "2023-12-15T23:42:01.029524449Z"
