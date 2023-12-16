@@ -80,7 +80,6 @@ providers:
 - codestarnotifications
 - cognitoidentity
 - cognitoidp
-- config
 - configservice
 - connect
 - cur
