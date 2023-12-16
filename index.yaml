@@ -36,6 +36,16 @@ entries:
   crossplane-aws-upbound:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-12-16T06:40:47.772676024Z"
+    description: A Helm chart for Kubernetes
+    digest: da10bfb0ba5ab118accb1afd347df353b1e736edcec495cd066434016a1246b3
+    name: crossplane-aws-upbound
+    type: application
+    urls:
+    - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/crossplane-aws-upbound-1.0.1/crossplane-aws-upbound-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2023-12-16T05:33:11.822870189Z"
     description: A Helm chart for Kubernetes
     digest: 4a679db50a2a15d19736b6834e15dea36d27dec5eedd06403536ed2b682cf78f
@@ -76,4 +86,4 @@ entries:
     urls:
     - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/team-1.0.0/team-1.0.0.tgz
     version: 1.0.0
-generated: "2023-12-16T05:33:12.238190795Z"
+generated: "2023-12-16T06:40:47.772687716Z"
