@@ -22,6 +22,50 @@ entries:
     urls:
     - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/aws-fargate-fluentbit-1.0.0/aws-fargate-fluentbit-1.0.0.tgz
     version: 1.0.0
+  crossplane-aws:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-12-16T05:33:11.614673788Z"
+    description: A Helm chart for Kubernetes
+    digest: 04cda6ce32ffbb1325f7fa086d3a39d53eb48ee6cc55a3eef09cd73de8c2b146
+    name: crossplane-aws
+    type: application
+    urls:
+    - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/crossplane-aws-1.0.0/crossplane-aws-1.0.0.tgz
+    version: 1.0.0
+  crossplane-aws-upbound:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-12-16T05:33:11.822870189Z"
+    description: A Helm chart for Kubernetes
+    digest: 4a679db50a2a15d19736b6834e15dea36d27dec5eedd06403536ed2b682cf78f
+    name: crossplane-aws-upbound
+    type: application
+    urls:
+    - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/crossplane-aws-upbound-1.0.0/crossplane-aws-upbound-1.0.0.tgz
+    version: 1.0.0
+  crossplane-helm:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-12-16T05:33:12.028917669Z"
+    description: A Helm chart for Kubernetes
+    digest: 60a3ed5daeb16f90ddac9b5536265c160a331ac15b6e454366c85d108bba2892
+    name: crossplane-helm
+    type: application
+    urls:
+    - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/crossplane-helm-1.0.0/crossplane-helm-1.0.0.tgz
+    version: 1.0.0
+  crossplane-kubernetes:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-12-16T05:33:12.238178602Z"
+    description: A Helm chart for Kubernetes
+    digest: 5e869b6372654976c19daa92f2e937490583ed876816519afe55659b775695d0
+    name: crossplane-kubernetes
+    type: application
+    urls:
+    - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/crossplane-kubernetes-1.0.0/crossplane-kubernetes-1.0.0.tgz
+    version: 1.0.0
   team:
   - apiVersion: v2
     created: "2023-12-15T23:17:51.077001402Z"
@@ -32,4 +76,4 @@ entries:
     urls:
     - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/team-1.0.0/team-1.0.0.tgz
     version: 1.0.0
-generated: "2023-12-15T23:42:01.029524449Z"
+generated: "2023-12-16T05:33:12.238190795Z"
