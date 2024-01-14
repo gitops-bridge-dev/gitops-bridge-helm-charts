@@ -17,7 +17,7 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-  package: {{ .package.registry }}:{{ default .package.version $.Values.global.aws_version }}
+  package: {{ .package.registry }}:{{ .package.version }}
   runtimeConfigRef:
     apiVersion: pkg.crossplane.io/v1beta1
     kind: DeploymentRuntimeConfig

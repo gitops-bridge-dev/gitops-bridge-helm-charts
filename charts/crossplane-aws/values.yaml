@@ -1,11 +1,11 @@
 global:
-  iam_role_arn_aws: null
   enabled_aws: true
 
 deploymentRuntimeConfig:
   enabled: true
   metadata:
     name: "aws-runtime-config"
+    role_arn: null
     annotations: {}
     labels: {}
   spec:
@@ -30,7 +30,6 @@ provider:
   enabled: true
   metadata:
     name: "provider-aws"
-    iam_role_arn: null
     annotations: {}
     labels: {}
   package:
