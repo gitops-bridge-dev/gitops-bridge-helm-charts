@@ -1,6 +1,35 @@
 global:
   enabled_azure_upbound: true
 
+deploymentRuntimeConfig:
+  enabled: false
+  metadata:
+    name: "upbound-azure-runtime-config"
+    role_arn: ""
+    annotations: {}
+    labels: {}
+  spec:
+    deploymentTemplate:
+      spec:
+        selector: {}
+        template:
+          metadata:
+            annotations: {}
+            labels: 
+              azure.workload.identity/use: true
+          spec:
+            containers:
+              - name: package-runtime
+                args:
+                - --debug
+            securityContext:
+              fsGroup: 2000
+    serviceAccountTemplate:
+      metadata:
+        annotations: {}
+        labels:
+        name: azure-provider
+
 provider:
   enabled: true
   metadata:

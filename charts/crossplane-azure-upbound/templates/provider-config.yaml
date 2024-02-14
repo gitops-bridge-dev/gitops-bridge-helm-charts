@@ -5,7 +5,7 @@ kind: ProviderConfig
 metadata:
   name: {{ .metadata.name }}
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "4"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     helm.sh/hook: post-install
     {{- range $key, $value := .metadata.annotations }}

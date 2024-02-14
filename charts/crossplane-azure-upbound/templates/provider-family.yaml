@@ -5,7 +5,7 @@ kind: Provider
 metadata:
   name: upbound-provider-family-azure
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
     {{- range $key, $value := .metadata.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}

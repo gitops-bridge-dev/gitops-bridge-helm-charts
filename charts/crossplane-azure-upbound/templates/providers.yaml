@@ -5,7 +5,7 @@ kind: Provider
 metadata:
   name: provider-azure-{{ . }}
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "3"
     {{- range $key, $value := $.Values.provider.metadata.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
