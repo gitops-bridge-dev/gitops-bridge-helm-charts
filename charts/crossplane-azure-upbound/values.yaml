@@ -44,7 +44,7 @@ provider:
 providerConfig:
   enabled: true
   metadata:
-    name: azure-provider-config
+    name: default
     annotations: {}
     labels:
       app.kubernetes.io/managed-by: Helm
