@@ -1,0 +1,38 @@
+global:
+  enabled_azure_upbound: true
+
+provider:
+  enabled: true
+  metadata:
+    annotations: {}
+    labels: {}
+  package:
+    registry: xpkg.upbound.io/upbound
+    version: v0.42.0
+
+providerConfig:
+  enabled: true
+  metadata:
+    name: azure-provider-config
+    annotations: {}
+    labels: {}
+  spec:
+    credentials:
+      source: Secret
+      secretRef:
+        namespace: crossplane-system
+        name: azure-secret
+        key: creds
+    
+providers:
+- network
+- compute
+- storage
+- authorization
+- containerservice
+- containerregistry
+- keyvault
+- operationalinsights
+- insights
+- managedidentity
+- resources
