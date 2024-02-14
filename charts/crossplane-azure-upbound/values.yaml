@@ -7,7 +7,8 @@ deploymentRuntimeConfig:
     name: "upbound-azure-runtime-config"
     role_arn: ""
     annotations: {}
-    labels: {}
+    labels:
+      app.kubernetes.io/managed-by: Helm
   spec:
     deploymentTemplate:
       spec:
@@ -34,7 +35,8 @@ provider:
   enabled: true
   metadata:
     annotations: {}
-    labels: {}
+    labels:
+      app.kubernetes.io/managed-by: Helm
   package:
     registry: xpkg.upbound.io/upbound
     version: v0.42.0
@@ -44,7 +46,8 @@ providerConfig:
   metadata:
     name: azure-provider-config
     annotations: {}
-    labels: {}
+    labels:
+      app.kubernetes.io/managed-by: Helm
   spec:
     credentials:
       source: Secret

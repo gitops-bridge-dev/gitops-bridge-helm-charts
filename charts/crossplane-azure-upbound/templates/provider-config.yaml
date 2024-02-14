@@ -3,7 +3,7 @@
 apiVersion: azure.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: {{ .metadata.name }}
+  name: {{ .metadata.name }}   
   annotations:
     argocd.argoproj.io/sync-wave: "4"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
@@ -11,7 +11,6 @@ metadata:
     {{- range $key, $value := .metadata.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
-
   {{- if .metadata.labels }}
   labels:
     {{- range $key, $value := .metadata.labels }}
