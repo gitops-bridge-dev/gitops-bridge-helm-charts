@@ -38,6 +38,7 @@ provider:
 
 providerConfig:
   enabled: true
+  default: true
   metadata:
     name: "aws-provider-config"
     annotations: {}
