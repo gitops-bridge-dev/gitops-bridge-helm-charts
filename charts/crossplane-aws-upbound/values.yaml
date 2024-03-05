@@ -33,10 +33,11 @@ provider:
     labels: {}
   package:
     registry: xpkg.upbound.io/upbound
-    version: v0.47.1
+    version: v1.1.0
 
 providerConfig:
   enabled: true
+  default: true
   metadata:
     name: "aws-provider-config"
     annotations: {}
