@@ -24,6 +24,16 @@ entries:
     version: 1.0.0
   crossplane-aws:
   - apiVersion: v2
+    appVersion: v0.47.0
+    created: "2024-03-05T01:06:25.711795335Z"
+    description: A Helm chart for Kubernetes
+    digest: 1284e077c50f88584c929aa638b7854a09ee4e472d84666e772a676f1f7a0c18
+    name: crossplane-aws
+    type: application
+    urls:
+    - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/crossplane-aws-2.2.0/crossplane-aws-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v2
     appVersion: v0.46.0
     created: "2024-01-14T01:36:14.542571255Z"
     description: A Helm chart for Kubernetes
@@ -136,4 +146,4 @@ entries:
     urls:
     - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/team-1.0.0/team-1.0.0.tgz
     version: 1.0.0
-generated: "2024-01-14T01:36:14.542596261Z"
+generated: "2024-03-05T01:06:25.711825541Z"
