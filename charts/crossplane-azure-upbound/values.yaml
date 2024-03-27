@@ -44,8 +44,7 @@ providerConfig:
   metadata:
     name: default
     annotations: {}
-    labels:
-      app.kubernetes.io/managed-by: Helm
+    labels: {}
   spec:
     credentials:
       source: Secret
