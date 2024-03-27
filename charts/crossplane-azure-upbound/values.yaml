@@ -7,8 +7,7 @@ deploymentRuntimeConfig:
     name: "upbound-azure-runtime-config"
     role_arn: ""
     annotations: {}
-    labels:
-      app.kubernetes.io/managed-by: Helm
+    labels: {}
   spec:
     deploymentTemplate:
       spec:
