@@ -18,9 +18,9 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-  {{- if and .spec.clientID .spec.tenantID .spec.subscriptionID }}
+  {{- if and .spec.credentials.source .spec.credentials.clientID .spec.credentials.tenantID .spec.credentials.subscriptionID }}
   credentials:
-    source: UserAssignedManagedIdentity
+    source: {{ .spec.credentials.source }}
   clientID: {{ .spec.clientID }}
   subscriptionID: {{ .spec.subscriptionID }}
   tenantID: {{ .spec.tenantID }}
