@@ -20,7 +20,7 @@ metadata:
 spec:
   {{- if and .spec.source .spec.clientID .spec.tenantID .spec.subscriptionID }}
   credentials:
-    source: {{ .spec.credentials.source }}
+    source: {{ .spec.source }}
   clientID: {{ .spec.clientID }}
   subscriptionID: {{ .spec.subscriptionID }}
   tenantID: {{ .spec.tenantID }}
