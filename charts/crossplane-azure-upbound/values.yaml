@@ -4,7 +4,7 @@ global:
 deploymentRuntimeConfig:
   enabled: false
   metadata:
-    name: "upbound-azure-runtime-config"
+    name: "default"
     role_arn: ""
     annotations: {}
     labels:
