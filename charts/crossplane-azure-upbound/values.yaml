@@ -30,6 +30,7 @@ deploymentRuntimeConfig:
         annotations: {}
         labels:
           azure.workload.identity/use: "true"
+        name: azure-provider
 
 provider:
   enabled: true
