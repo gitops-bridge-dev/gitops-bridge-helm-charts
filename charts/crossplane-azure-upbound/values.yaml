@@ -4,32 +4,29 @@ global:
 deploymentRuntimeConfig:
   enabled: false
   metadata:
-    name: "upbound-azure-runtime-config"
+    name: "default"
     role_arn: ""
     annotations: {}
     labels:
       app.kubernetes.io/managed-by: Helm
   spec:
     deploymentTemplate:
-      spec:
-        selector: {}
-        template:
-          metadata:
-            annotations: {}
-            labels: 
-              azure.workload.identity/use: true
-          spec:
-            containers:
-              - name: package-runtime
-                args:
-                - --debug
-            securityContext:
-              fsGroup: 2000
-    serviceAccountTemplate:
       metadata:
-        annotations: {}
         labels:
-        name: azure-provider
+          azure.workload.identity/use: "true"
+      spec:
+        replicas: 1
+        template:
+          securityContext:
+            fsGroup: 2000
+          containers:
+          - name: package-runtime
+            args:
+            - --debug
+    serviceAccountTemplate:
+      metadata: 
+        labels:
+            azure.workload.identity/use: "true"  
 
 provider:
   enabled: true
