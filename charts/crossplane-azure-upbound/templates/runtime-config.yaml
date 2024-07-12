@@ -17,9 +17,9 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-  serviceAccountTemplate:
-  {{- .spec.deploymentTemplate | toYaml | nindent 4 }}
   deploymentTemplate:
+  {{- .spec.deploymentTemplate | toYaml | nindent 4 }}  
+  serviceAccountTemplate:
   {{- .spec.serviceAccountTemplate | toYaml | nindent 4 }}
 {{- end }}
 {{- end }}
