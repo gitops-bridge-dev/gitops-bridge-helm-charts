@@ -26,7 +26,7 @@ deploymentRuntimeConfig:
     serviceAccountTemplate:
       metadata: 
         labels:
-            azure.workload.identity/use: "true"  
+          azure.workload.identity/use: "true"  
 
 provider:
   enabled: true
