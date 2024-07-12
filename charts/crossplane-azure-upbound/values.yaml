@@ -17,7 +17,7 @@ deploymentRuntimeConfig:
           metadata:
             annotations: {}
             labels: 
-              azure.workload.identity/use: true
+              azure.workload.identity/use: "true"
           spec:
             containers:
               - name: package-runtime
@@ -29,7 +29,7 @@ deploymentRuntimeConfig:
       metadata:
         annotations: {}
         labels:
-        name: azure-provider
+          azure.workload.identity/use: "true"
 
 provider:
   enabled: true
