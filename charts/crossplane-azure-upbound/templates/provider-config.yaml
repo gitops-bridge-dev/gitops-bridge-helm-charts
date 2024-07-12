@@ -18,7 +18,7 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-  {{- if and .spec.credentials.source .spec.credentials.clientID .spec.credentials.tenantID .spec.credentials.subscriptionID }}
+  {{- if and .spec.source .spec.clientID .spec.tenantID .spec.subscriptionID }}
   credentials:
     source: {{ .spec.credentials.source }}
   clientID: {{ .spec.clientID }}
