@@ -25,10 +25,12 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
       {{- end }}
+      {{- if .spec.serviceAccountTemplate.metadata.annotations }}
       annotations:
         {{- range $key, $value := .spec.serviceAccountTemplate.metadata.annotations }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}
+      {{- end }}
       name: {{ .spec.serviceAccountTemplate.metadata.name }}
   deploymentTemplate:
   {{- .spec.deploymentTemplate | toYaml | nindent 4 }}
