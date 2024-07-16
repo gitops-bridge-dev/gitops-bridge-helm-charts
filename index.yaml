@@ -107,6 +107,16 @@ entries:
   crossplane-azure-upbound:
   - apiVersion: v2
     appVersion: v1.0.0
+    created: "2024-07-16T18:57:08.374087919Z"
+    description: A Helm chart for the Azure Provider for Crossplane
+    digest: bc985983877b1a85a15adf7daf45d00cc6fdb6bb19aca475b716315afc90fa2b
+    name: crossplane-azure-upbound
+    type: application
+    urls:
+    - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/crossplane-azure-upbound-1.1.0/crossplane-azure-upbound-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
+    appVersion: v1.0.0
     created: "2024-03-28T19:14:53.1296126Z"
     description: A Helm chart for the Azure Provider for Crossplane
     digest: 25f664aefec91482253e1161e48bd262c3a195c9672b7802e30ab889c139787f
@@ -187,4 +197,4 @@ entries:
     urls:
     - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/team-1.0.0/team-1.0.0.tgz
     version: 1.0.0
-generated: "2024-03-28T19:14:53.129640993Z"
+generated: "2024-07-16T18:57:08.374144535Z"
