@@ -56,25 +56,3 @@ helm.sh/chart: {{ include "team.chart" . }}
 {{- end }}
 {{- end }}
 
-
-{{/*
-Create the name of the NetworkPolicy to deny all outgoing traffic
-*/}}
-{{- define "team.networkPolicy.egress.deny.all.name" }}
-{{- printf "%s-%s" ((include "team.fullname" .) | trunc 47 | trimSuffix "-") "egress-deny-all" }}
-{{- end }}
-
-{{/*
-Create the name of the NetworkPolicy to allow outgoing traffic to the Kubernetes DNS
-*/}}
-{{- define "team.networkPolicy.egress.allow.dns.name" }}
-{{- printf "%s-%s" ((include "team.fullname" .) | trunc 47 | trimSuffix "-") "egress-allow-dns" }}
-{{- end }}
-
-{{/*
-Create the name of the NetworkPolicy to deny all incoming traffic
-*/}}
-{{- define "team.networkPolicy.ingress.deny.all.name" }}
-{{- printf "%s-%s" ((include "team.fullname" .) | trunc 46 | trimSuffix "-") "ingress-deny-all" }}
-{{- end }}
-
