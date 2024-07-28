@@ -189,6 +189,15 @@ entries:
     version: 1.0.0
   team:
   - apiVersion: v2
+    created: "2024-07-28T18:12:25.118714025Z"
+    description: A Helm Chart to bootstrap a Namespace in a Multi-Tenancy setup
+    digest: 65d9188475db2665f6444fb546c4acd287fae734be8638a9cdbfc3692f1d4a74
+    name: team
+    type: application
+    urls:
+    - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/team-2.0.0/team-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     created: "2023-12-15T23:17:51.077001402Z"
     description: A Helm Chart to bootstrap a Namespace in a Multi-Tenancy setup
     digest: f8a817d93468216d8056864b34c46d08ae22932bb6bed61652e14455a53afb09
@@ -197,4 +206,4 @@ entries:
     urls:
     - https://github.com/gitops-bridge-dev/gitops-bridge-helm-charts/releases/download/team-1.0.0/team-1.0.0.tgz
     version: 1.0.0
-generated: "2024-07-16T18:57:08.374144535Z"
+generated: "2024-07-28T18:12:25.118753729Z"
