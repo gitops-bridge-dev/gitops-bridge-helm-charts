@@ -1,4 +1,4 @@
-{{- if and (.Values.networkPolicies.enabled) (.Values.networkPolicies.ingress.deny.all) }}
+{{- if and (.Values.networkPolicies.enabled) (.Values.networkPolicies.ingress.deny.all.enabled) }}
 {{- range $name, $tenant := .Values.namespaces }}
 ---
 apiVersion: networking.k8s.io/v1
@@ -18,7 +18,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
     {{- end }}
-  name: {{ include "team.networkPolicy.ingress.deny.all.name" $ | quote }}
+  name: {{ $.Values.networkPolicies.ingress.deny.all.name }}
   namespace: {{ $name }}
 spec:
   {{- if $.Values.networkPolicies.ingress.deny.all.podSelector }}

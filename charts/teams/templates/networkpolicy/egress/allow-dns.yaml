@@ -18,7 +18,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
     {{- end }}
-  name: {{ include "team.networkPolicy.egress.allow.dns.name" $ | quote }}
+  name: {{ $.Values.networkPolicies.egress.allow.dns.name }}
   namespace: {{ $name }}
 spec:
   {{- if $.Values.networkPolicies.egress.allow.dns.podSelector }}
