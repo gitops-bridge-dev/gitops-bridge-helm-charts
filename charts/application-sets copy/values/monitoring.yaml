@@ -1,0 +1,66 @@
+# Monitoring Addons
+cw-prometheus:
+  enabled: true
+  enableAckPodIdentity: false
+  namespace: '{{default "amazon-cloudwatch" (index .metadata.annotations "cw_prometheus_namespace")}}'
+  chartName: cw-prometheus
+  defaultVersion: "0.1.0"
+  path: 'charts/cw-prometheus'
+  selector:
+    matchExpressions:
+      - key: enable_cw_prometheus
+        operator: In
+        values: ['true']
+kube-prometheus-stack:
+  enabled: true
+  enableAckPodIdentity: false
+  namespace: '{{default "kube-prometheus-stack" (index .metadata.annotations "kube_prometheus_stack_namespace")}}'
+  chartName: kube-prometheus-stack
+  chartRepository: https://prometheus-community.github.io/helm-charts
+  defaultVersion: "56.21.0"
+  selector:
+    matchExpressions:
+      - key: enable_kube_prometheus_stack
+        operator: In
+        values: ['true']
+cni-metrics-helper:
+  enabled: true
+  enableAckPodIdentity: false
+  namespace: "kube-system"
+  chartName: cni-metrics-helper
+  chartRepository: https://aws.github.io/eks-charts
+  defaultVersion: "1.18.5"
+  valuesObject:
+    env:
+      AWS_CLUSTER_ID: '{{.metadata.annotations.aws_cluster_name}}'
+  selector:
+    matchExpressions:
+      - key: enable_cni_metrics_helper
+        operator: In
+        values: ['true']
+amp-prometheus:
+  enabled: true
+  enableAckPodIdentity: false
+  releaseName: amp-prometheus
+  namespace: '{{default "amp-prometheus" (index .metadata.annotations "amp_prometheus_namespace")}}'
+  chartName: prometheus
+  chartRepository: https://prometheus-community.github.io/helm-charts
+  defaultVersion: "27.3.1"
+  selector:
+    matchExpressions:
+      - key: enable_amp_prometheus
+        operator: In
+        values: ['true']
+  valuesObject:
+    serviceAccounts:
+      server:
+          name: '{{default "amp-prometheus-server-sa" (index .metadata.annotations "amp_prometheus_server_sa")}}'
+          annotations:
+            eks.amazonaws.com/role-arn: '{{default "" (index .metadata.annotations "amp_prometheus_iam_role_arn")}}'
+    server:
+      remoteWrite:
+        -
+          url: '{{(index .metadata.annotations "amp_endpoint_url")}}.api/v1/remote_write'
+          sigv4:
+              region: '{{.metadata.annotations.aws_region}}'
+              role_arn: '{{default "" (index .metadata.annotations "amp_prometheus_crossaccount_role")}}'

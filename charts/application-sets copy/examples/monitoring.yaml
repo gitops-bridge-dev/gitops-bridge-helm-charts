@@ -1,0 +1,132 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-monitoring
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  generators:
+  - matrix:
+      generators:
+        - matrix:
+            generators:
+              - clusters:
+                  selector:
+                    matchLabels:
+                      fleet_member: hub-cluster
+                  values:
+                    chartName: application-sets  
+                    chartRepo: "12345678910.dkr.ecr.eu-west-2.amazonaws.com"      
+                    chartPath: "charts/application-sets"
+                    applicationSetGroup: "monitoring"
+                    groupRelease: '{{default "" (index .metadata.labels "monitoringRelease")}}'
+                    useSelectors: "false"
+                    useVersionSelectors: "true"
+              - git:
+                  repoURL: '{{ .metadata.annotations.fleet_repo_url }}'
+                  revision: '{{ .metadata.annotations.fleet_repo_revision }}'
+                  files:
+                    - path: "{{ .metadata.annotations.fleet_repo_basepath }}/bootstrap/versions/applicationSets.yaml"
+        - list:
+            elementsYaml: |
+                  {{- $releaseTypes := index .releases .values.applicationSetGroup | toJson | fromJson -}}
+                  {{- $result := list -}}
+                  {{- $defaultVersion := dict -}}
+                  {{- /* Defining the Default Version in case we need to fall back */ -}}
+                  {{- range $releaseType := $releaseTypes -}}
+                    {{- if eq $releaseType.type "default" -}}
+                      {{- $defaultVersion = $releaseType -}}
+                    {{- end -}}
+                  {{- end -}}
+                  {{- /* We look for the defined releases */ -}}
+                  {{- range $releaseType := $releaseTypes -}}
+                    {{- /* Case 1: If selectors is true, include all group releases */ -}}
+                    {{- if eq $.values.useSelectors "true" -}}
+                      {{- $result = append $result $releaseType -}}
+                    {{- /* Case 2: If group version Release value exists, only include matching releases */ -}}
+                    {{- else if $.values.groupRelease -}}
+                      {{- if or (not $releaseType.type) (eq $releaseType.type $.values.groupRelease) -}}
+                        {{- $result = append $result $releaseType -}}
+                      {{- end -}}
+                    {{- /* Case 3: Default case - include version if it's the default type */ -}}
+                    {{- else -}}
+                      {{- if eq $releaseType.type "default" -}}
+                        {{- $result = append $result $releaseType -}}
+                      {{- end -}}
+                    {{- end -}}
+                  {{- end -}}
+                  {{- /* If no releases were selected, use default */ -}}
+                  {{- if eq (len $result) 0 -}}
+                    {{- $result = append $result $defaultVersion -}}
+                  {{- end -}}
+                  {{ $result | toJson }}
+  ###################################################
+  #base template (everything common)
+  ###################################################
+  template:
+    metadata:
+      name: 'cluster-{{.values.applicationSetGroup}}-{{.name}}-{{.type | lower }}'
+    spec:
+      project: default
+      destination:
+        namespace: argocd
+        name: '{{ .name }}'
+      # syncPolicy is identical for both variants
+      syncPolicy:
+        automated:
+          selfHeal: false
+          allowEmpty: true
+          prune: false
+        retry:
+          limit: 100
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+  ###################################################
+  # conditional sources
+  ###################################################
+  templatePatch: |
+    spec:
+      sources:
+        - ref: values
+          repoURL: '{{ .metadata.annotations.addons_repo_url }}'
+          targetRevision: '{{ .metadata.annotations.addons_repo_revision }}'
+       {{- if  eq .use_helm_repo_path "false" }}
+        - repoURL: '{{default .values.chartRepo .chartRepo }}'
+          chart: '{{ default .values.chartName .ecrChartName  }}'
+          targetRevision: '{{.version}}'
+      {{- else }}
+        - repoURL: '{{ .metadata.annotations.addons_repo_url }}'
+          path: '{{ .values.chartPath }}'
+          targetRevision: '{{ .metadata.annotations.addons_repo_revision }}'
+      {{- end }}
+          helm:
+            ignoreMissingValueFiles: true
+            valuesObject:
+              useSelectors: false
+              useVersionSelectors: '{{.values.useVersionSelectors}}'
+            # Defining the way to group monitoring This application set will handly monitoring and ACK values
+              mergeValues:
+                monitoring: 
+                  use: true
+              releaseType: '{{.type | lower }}'
+              {{- if eq .values.useVersionSelectors "true"}}
+              releases:
+                {{.values.applicationSetGroup}}Release: '{{.type | lower}}'
+              {{- end }}
+              {{- if eq .values.useSelectors "false"}}
+              globalSelectors:
+                fleet_member: hub-cluster
+              {{- end }}
+              valueFiles:
+                - defaults/{{.values.applicationSetGroup}}
+                - clusters/{{`{{ .nameNormalized }}`}}/{{.values.applicationSetGroup}}
+            valueFiles:
+              - $values/{{ .metadata.annotations.addons_repo_basepath }}/bootstrap/defaults/{{.values.applicationSetGroup}}.yaml
+              - $values/{{ .metadata.annotations.addons_repo_basepath }}/{{ .metadata.labels.tenant }}/defaults/{{ .values.chartName }}/{{.values.applicationSetGroup}}.yaml
+              - $values/{{ .metadata.annotations.addons_repo_basepath }}/{{ .metadata.labels.tenant }}/clusters/{{ .name }}/{{ .values.chartName }}/{{.values.applicationSetGroup}}.yaml
+              - $values/{{ .metadata.annotations.addons_repo_basepath }}/{{ .metadata.labels.tenant }}/environments/{{ .metadata.labels.environment }}/{{ .values.chartName }}/{{.values.applicationSetGroup}}.yaml

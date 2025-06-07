@@ -1,0 +1,42 @@
+{{- if .Values.ecrAuthenticationToken.enabled }}
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: ECRAuthorizationToken
+metadata:
+  name: {{.Values.ecrAuthenticationToken.name}}
+  namespace: {{.Values.ecrAuthenticationToken.namespace}}
+spec:
+  region: {{.Values.ecrAuthenticationToken.region}}
+
+{{- range $idx, $endpoint := .Values.ecrAuthenticationToken.registry_endpoints }}
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: {{$.Values.ecrAuthenticationToken.name}}-{{$idx}}
+  namespace: {{$.Values.ecrAuthenticationToken.namespace}}
+spec:
+  refreshInterval: 8h
+  target:
+    name: {{$.Values.ecrAuthenticationToken.name}}-{{$idx}}
+    creationPolicy: {{ $.Values.ecrAuthenticationToken.creationPolicy | default "Merge"}}
+    deletionPolicy: Retain
+    template:
+      engineVersion: v2
+      mergePolicy: Merge
+      metadata:
+        labels:
+          argocd.argoproj.io/secret-type: "repository"
+      data:
+        enableOCI: "true"
+        url: {{ $endpoint }}
+        username: "{{"{{ .username }}"}}"
+        password: "{{"{{ .password }}"}}"
+        type: "helm"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: ECRAuthorizationToken
+          name: {{$.Values.ecrAuthenticationToken.name}}
+{{- end }}
+{{- end }}
