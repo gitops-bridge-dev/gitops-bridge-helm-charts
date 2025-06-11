@@ -1,4 +1,9 @@
+{{/* First, import and merge all values files based on enabled components */}}
 {{- $values := .Values }}
+{{- $releaseType := .Values.releaseType }}
+{{- $useVersionSelectors := .Values.useVersionSelectors}}
+{{- $useSelectors:= .Values.useSelectors  -}}
+{{- $globalSelectors  := .Values.globalSelectors   -}}
 {{- $chartType := .Values.chartType }}
 {{- $namespace := .Values.namespace }}
 {{- $syncPolicy := .Values.syncPolicy -}}
@@ -10,8 +15,14 @@
 {{- $valueFiles := .Values.valueFiles -}}
 {{- $valuesFilePrefix :=  .Values.valuesFilePrefix -}}
 {{- $useValuesFilePrefix := (default false .Values.useValuesFilePrefix )  -}}
-{{- $useSelectors:= .Values.useSelectors  -}}
-{{- $globalSelectors  := .Values.globalSelectors   -}}
+{{- $argoProjectName := (default "default" .Values.argoProjectName ) -}}
+
+{{/* Merge values From Default */}}
+{{- if .Values.mergeValues -}}
+{{- $importedValues := include "application-sets.importValues" . | fromYaml -}}
+{{- $mergedValues := mergeOverwrite $importedValues .Values -}}
+{{- $_ := set $ "Values" $mergedValues -}}
+{{- end -}}
 
 {{- range $chartName, $chartConfig := .Values }}
 {{- if and (kindIs "map" $chartConfig) (hasKey $chartConfig "enabled") }}
@@ -20,7 +31,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
+  {{- if $releaseType }}
+  name: '{{ $nameNormalize }}-{{$releaseType}}'
+  {{- else }}
   name: {{ $nameNormalize }}
+  {{- end }}
   namespace: {{ default "argocd" $namespace }}
   annotations:
     {{- include "application-sets.annotations" $ | nindent 4 }}
@@ -59,9 +74,16 @@ spec:
           - clusters:
               selector:
                 matchLabels:
+                  {{- if eq (toString $useVersionSelectors) "true" }}
+                    {{- if $values.releases }}
+                      {{- range $releaseName, $release := $values.releases}}
+                  {{ $releaseName }}: {{ $release }}
+                      {{- end }}
+                    {{- end }}
+                  {{- end }}
                   argocd.argoproj.io/secret-type: cluster
                   {{- if $globalSelectors }}
-                  {{- toYaml $globalSelectors | nindent 18 }}
+                    {{- toYaml $globalSelectors | nindent 18 }}
                   {{- end }}
                   {{- if $chartConfig.selectorMatchLabels }}
                   {{- toYaml $chartConfig.selectorMatchLabels | nindent 18 }}
@@ -99,12 +121,12 @@ spec:
   template:
     metadata:
       {{- if $chartConfig.appSetName }}
-      name: {{ $chartConfig.appSetName }}
+      name: '{{$releaseType}}-{{ $chartConfig.appSetName }}-{{`{{ .values.addonChartVersion }}`}}'
       {{- else }}
-      name: '{{ $nameNormalize }}-{{`{{ .name }}`}}'
+      name: '{{$releaseType}}-{{`{{ .name | trunc 30 }}`}}-{{ $nameNormalize | trunc 20 }}-{{`{{ .values.addonChartVersion }}`}}'
       {{- end }}
     spec:
-      project: default
+      project: {{ $argoProjectName }}
       sources:
       - repoURL: {{ $repoURLGit | squote}}
         targetRevision: {{ $repoURLGitRevision | squote }}
