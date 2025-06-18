@@ -1,0 +1,75 @@
+iam-chart:
+  enabled: true
+  enableAckPodIdentity: false 
+  namespace: ack-system
+  defaultVersion: "1.3.15"
+  chartNamespace: aws-controllers-k8s
+  chartRepository: public.ecr.aws
+  selector:
+    matchExpressions:
+      - key: enable_ack_iam
+        operator: In
+        values: ['true']
+  valuesObject:
+    aws:
+      region: '{{.metadata.annotations.aws_region}}'
+    serviceAccount:
+      name: '{{.metadata.annotations.ack_iam_service_account}}'
+ack-eks:
+  enabled: true
+  enableAckPodIdentity: false 
+  namespace: ack-system
+  chartName: eks-chart
+  defaultVersion: "1.7.1"
+  chartNamespace: aws-controllers-k8s
+  chartRepository: public.ecr.aws
+  selector:
+    matchExpressions:
+      - key: enable_ack_eks
+        operator: In
+        values: ['true']
+  valuesObject:
+    aws:
+      region: '{{.metadata.annotations.aws_region}}'
+    serviceAccount:
+      name: '{{.metadata.annotations.ack_eks_service_account}}'
+ack-acm:
+  enable: true
+  enableAckPodIdentity: false
+  namespace: ack-system
+  chartName: acm-chart
+  defaultVersion: "1.0.2"
+  chartNamespace: aws-controllers-k8s
+  chartRepository: public.ecr.aws
+  selector:
+    matchExpressions:
+      - key: enable_ack_acm
+        operator: In
+        values: ['true']
+  valuesObject:
+    aws:
+      region: '{{.metadata.annotations.aws_region}}'
+    serviceAccount:
+      name:  'ack-acm-controller'
+      annotations:
+        eks.amazonaws.com/role-arn: '{{default "" (index .metadata.annotations "ack_acm_role_arn")}}'
+efs_chart:
+  enable: true
+  enableAckPodIdentity: false
+  namespace: ack-system
+  chartName: efs-chart
+  defaultVersion: "1.0.6"
+  chartNamespace: aws-controllers-k8s
+  chartRepository: public.ecr.aws
+  selector:
+    matchExpressions:
+      - key: enable_efs_ack
+        operator: In
+        values: ['true']
+  valuesObject:
+    aws:
+      region: '{{.metadata.annotations.aws_region}}'
+    serviceAccount:
+      name:  'ack-efs-controller'
+      annotations:
+        eks.amazonaws.com/role-arn: '{{default "" (index .metadata.annotations "ack_efs_role_arn")}}'
